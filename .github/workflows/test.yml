@@ -20,7 +20,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install testing dependencies
-      run: npm ci
+      run: npm install --include=optional
 
     - name: Run Tests
       run: |
