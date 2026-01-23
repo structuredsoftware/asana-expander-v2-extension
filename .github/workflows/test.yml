@@ -20,7 +20,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install testing dependencies
-      run: npm install --include=optional
+      run: |
+        rm -f package-lock.json
+        npm install --include=optional --no-package-lock
 
     - name: Run Tests
       run: |
