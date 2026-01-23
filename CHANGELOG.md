@@ -2,6 +2,11 @@
 
 All notable changes to `asana-expander-extension` will be documented in this file.
 
+## v4.2.0 - 2026-01-23
+
+- Add auto-expansion for "See more" in the Asana Inbox feed
+- Expand newly loaded inbox items as they appear when scrolling
+
 ## v4.1.0 - 2026-01-23
 
 - Make extension logging opt-in via local storage debug flag

@@ -7,11 +7,11 @@
 
 ---
 
-A browser extension to automatically expand comments and threads in Asana.
+A browser extension to automatically expand comments and threads in Asana, including Inbox items.
 
 Do you also hate to click on those "See more" links in Asana, just to see the last sentence of a longer comment? Or did you also miss an important comment in a longer comment thread in an Asana Task?
 
-This extension solves this problem my automatically clicking on those links whenever you open a task with many comments or when a comment is longer than 300 characters.
+This extension solves this problem by automatically clicking on those links whenever you open a task with many comments, view longer comments, or scroll through Inbox notifications.
 
 ## Installation
 
