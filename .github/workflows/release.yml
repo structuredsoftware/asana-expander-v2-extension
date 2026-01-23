@@ -59,36 +59,41 @@ jobs:
         with:
           script: |
             const tagName = `v.${{ steps.version.outputs.version }}`;
+            const fs = require("fs");
+            const changelog = fs.readFileSync("CHANGELOG.md", "utf8");
+            const sectionRegex = new RegExp(
+              `^##\\s+${tagName.replace(".", "\\.")}\\s+.*$([\\s\\S]*?)(^##\\s+|\\Z)`,
+              "m",
+            );
+            const match = changelog.match(sectionRegex);
+            const sectionBody = match ? match[1].trim() : "";
+            const changes = sectionBody
+              .split("\n")
+              .filter((line) => line.trim().startsWith("- "))
+              .map((line) => line.trim());
+            const changeLines = changes.length > 0 ? changes : ["- No changes listed."];
+
+            const tags = await github.paginate(github.rest.repos.listTags, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+            const previousTag = tags.find((tag) => tag.name !== tagName)?.name;
+            const compareUrl = previousTag
+              ? `https://github.com/${context.repo.owner}/${context.repo.repo}/compare/${previousTag}...${tagName}`
+              : `https://github.com/${context.repo.owner}/${context.repo.repo}/commits/${tagName}`;
+            const body = [
+              "# Changes",
+              "",
+              ...changeLines,
+              "",
+              `**Full Changelog**: ${compareUrl}`,
+            ].join("\n");
+
             await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: tagName,
               name: tagName,
-              generate_release_notes: true,
-            });
-
-      - name: Append changelog link
-        if: steps.version_change.outputs.changed == 'true' && steps.tag.outputs.exists != 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const tagName = `v.${{ steps.version.outputs.version }}`;
-            const { data } = await github.rest.repos.getReleaseByTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag: tagName,
-            });
-            const changelog = `Changelog: https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md`;
-            const existingBody = data.body || "";
-            const newBody = existingBody.includes(changelog)
-              ? existingBody
-              : existingBody
-                ? `${existingBody}\n\n${changelog}`
-                : changelog;
-            await github.rest.repos.updateRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: data.id,
-              body: newBody,
-              name: tagName,
+              body,
             });
