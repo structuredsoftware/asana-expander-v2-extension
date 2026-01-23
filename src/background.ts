@@ -2,9 +2,15 @@ import browser from "webextension-polyfill";
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab): void => {
     if (changeInfo.title !== undefined) {
-        browser.tabs.sendMessage(tabId, {
-            message: 'url-changed',
-            url: tab.url,
-        });
+        if (!tab.url || !tab.url.includes('asana.com')) {
+            return;
+        }
+
+        browser.tabs
+            .sendMessage(tabId, {
+                message: 'url-changed',
+                url: tab.url,
+            })
+            .catch(() => undefined);
     }
 });
