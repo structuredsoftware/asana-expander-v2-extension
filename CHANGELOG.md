@@ -2,6 +2,10 @@
 
 All notable changes to `asana-expander-extension` will be documented in this file.
 
+## v4.0.1 - 2026-01-23
+
+- Guard background messaging when no content script is present
+
 ## v4.0.0 - 2026-01-23
 
 - Establish fork baseline for ongoing maintenance and releases
