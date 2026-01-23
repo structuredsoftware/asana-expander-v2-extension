@@ -1,6 +1,6 @@
 {
   "name": "Asana Expander",
-  "homepage_url": "https://github.com/stefanzweifel/asana-expander-extension",
+  "homepage_url": "https://github.com/structuredsoftware/asana-expander-extension",
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
   "icons": {
@@ -10,30 +10,17 @@
     "96": "icon/96.png",
     "128": "icon/128.png"
   },
-  "{{firefox}}.permissions": [
-    "tabs",
-     "*://*.asana.com/*"
-  ],
-  "{{chrome}}.permissions": [
-    "tabs"
-  ],
-  "{{chrome}}.host_permissions": [
-    "*://*.asana.com/*"
-  ],
+  "{{firefox}}.permissions": ["tabs", "*://*.asana.com/*"],
+  "{{chrome}}.permissions": ["tabs"],
+  "{{chrome}}.host_permissions": ["*://*.asana.com/*"],
   "background": {
     "{{chrome}}.service_worker": "src/background.ts",
-    "{{firefox}}.scripts": [
-      "src/background.ts"
-    ]
+    "{{firefox}}.scripts": ["src/background.ts"]
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*.asana.com/*"
-      ],
-      "js": [
-        "src/content.ts"
-      ],
+      "matches": ["https://*.asana.com/*"],
+      "js": ["src/content.ts"],
       "run_at": "document_end"
     }
   ]

@@ -1,10 +1,9 @@
 # Asana Expander Browser Extension
 
-[![tests](https://github.com/stefanzweifel/asana-expander-extension/actions/workflows/test.yml/badge.svg)](https://github.com/stefanzweifel/asana-expander-extension/actions/workflows/test.yml)
-
 > [!Note]
-> This extension is no longer actively maintained. I no longer use Asana.
-> But in the 5 years this extension was used by me, it worked flawlessly and without bugs. I'm sure this will be the case for the years to come.
+> This extension was started by [Stefan Zweifel](https://github.com/stefanzweifel) at
+> https://github.com/stefanzweifel/asana-expander-extension but is no longer being maintained there.
+> Development is now being continued again in this repo.
 
 ---
 
@@ -14,9 +13,6 @@ Do you also hate to click on those "See more" links in Asana, just to see the la
 
 This extension solves this problem my automatically clicking on those links whenever you open a task with many comments or when a comment is longer than 300 characters.
 
-Read more about why this extension exists [on my blog](https://stefanzweifel.dev/posts/2020/04/16/asana-expander-a-browser-extension-to-fix-asanas-ux-problems).
-
-
 ## Installation
 
 - [Chrome Extension](https://chrome.google.com/webstore/detail/asana-expander/goplcobjbaafmhoadgihbepeejbajbki)
@@ -25,11 +21,13 @@ Read more about why this extension exists [on my blog](https://stefanzweifel.dev
 ## Development
 
 Ensure you have
+
 - [Node.js](https://nodejs.org) 18 or later installed
 
 Then run the following:
+
 - `npm run install` to install dependencies.
-- `npm run dev` to start the development server 
+- `npm run dev` to start the development server
 - `npm run build-chrome` to build chrome extension
 - `npm run build-ff` to build firefox addon
 
