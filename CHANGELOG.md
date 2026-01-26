@@ -2,6 +2,10 @@
 
 All notable changes to `asana-expander-v2-extension` will be documented in this file.
 
+## v4.2.2 - 2026-01-26
+
+- Add Firefox-specific add-on metadata (gecko ID and data collection permissions)
+
 ## v4.2.1 - 2026-01-26
 
 - Split build outputs by browser target

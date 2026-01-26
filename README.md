@@ -34,32 +34,33 @@ Then run the following:
 
 ### Chrome
 
-- Go to the browser address bar and type `chrome://extensions`
-- Check the `Developer Mode` button to enable it.
-- Click on the `Load Unpacked Extension…` button.
-- Select `./dist/chrome`.
+1. Go to the browser address bar and enter `chrome://extensions`
+2. In the top right corner, enable `Developer Mode`
+3. Click on the `Load Unpacked` button
+4. Select the `./dist/chrome` folder
 
 ### Firefox
 
-- Go to the browser address bar and type `about:debugging#/runtime/this-firefox`
-- Click on the `Load Temporary Add-on...` button.
-- Select `./dist/firefox/manifest.json` file.
+1. Create a ZIP file of the contents of `./dist/firefox` (not of the folder itself)
+2. Go to the browser address bar and enter `about:debugging#/runtime/this-firefox`
+3. Click on the `Load Temporary Add-on...` button
+4. Select the zipped file created in step 1 (e.g. `./dist/firefox/firefox.zip`)
 
 ## Distribute
 
 ### Chrome
 
-- Run `npm run build-chrome`
-- Create ZIP of the contents of `./dist/chrome` (so `manifest.json` is at the zip root)
-- Navigate to Chrome Web Store Developer Dashboard
-- Upload new version to Dashboard
+1. Run `npm run build-chrome`
+1. Create a ZIP file of the contents of `./dist/chrome` (not of the folder itself)
+1. Navigate to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/u/2/webstore/devconsole/)
+1. Upload new version
 
 ### Firefox
 
-- Run `npm run build-ff`
-- Create ZIP of the contents of `./dist/firefox` (so `manifest.json` is at the zip root)
-- Navigate to [addons.mozilla.org](https://addons.mozilla.org/en-US/developers/addon/asana-expander/versions/submit/)
-- Upload new version
+1. Run `npm run build-ff`
+1. Create a ZIP file of the contents of `./dist/firefox` (not of the folder itself)
+1. Navigate to the [Mozilla Add-on Developer Hub ](https://addons.mozilla.org/en-US/developers/)
+1. Upload new version
 
 ### Build both
 

@@ -3,6 +3,14 @@
   "homepage_url": "https://github.com/structuredsoftware/asana-expander-extension",
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
+  "{{firefox}}.browser_specific_settings": {
+    "gecko": {
+      "id": "asana-expander-v2@structuredsoftware.com",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
   "icons": {
     "16": "icon/16.png",
     "32": "icon/32.png",
