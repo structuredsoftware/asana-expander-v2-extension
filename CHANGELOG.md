@@ -1,6 +1,10 @@
 # Changelog
 
-All notable changes to `asana-expander-extension` will be documented in this file.
+All notable changes to `asana-expander-v2-extension` will be documented in this file.
+
+## v4.2.1 - 2026-01-26
+
+- Split build outputs by browser target
 
 ## v4.2.0 - 2026-01-23
 

@@ -1,4 +1,4 @@
-# Asana Expander Browser Extension
+# Asana Expander v2 Browser Extension
 
 > [!Note]
 > This extension was started by [Stefan Zweifel](https://github.com/stefanzweifel) at
@@ -7,7 +7,7 @@
 
 ---
 
-A browser extension to automatically expand comments and threads in Asana, including Inbox items.
+Asana Expander v2 is a browser extension to automatically expand comments and threads in Asana, including Inbox items.
 
 Do you also hate to click on those "See more" links in Asana, just to see the last sentence of a longer comment? Or did you also miss an important comment in a longer comment thread in an Asana Task?
 
@@ -30,36 +30,40 @@ Then run the following:
 - `npm run dev` to start the development server
 - `npm run build-chrome` to build chrome extension
 - `npm run build-ff` to build firefox addon
+- `npm run build-all` to build both targets into `./dist/chrome` and `./dist/firefox`
 
 ### Chrome
 
 - Go to the browser address bar and type `chrome://extensions`
 - Check the `Developer Mode` button to enable it.
 - Click on the `Load Unpacked Extension…` button.
-- Select your extension’s extracted directory.
+- Select `./dist/chrome`.
 
 ### Firefox
 
-- Load the Add-on via `about:debugging#/runtime/this-firefox` as temporary Add-on.
-- Choose the `manifest.json` file in `./dist`
+- Go to the browser address bar and type `about:debugging#/runtime/this-firefox`
+- Click on the `Load Temporary Add-on...` button.
+- Select `./dist/firefox/manifest.json` file.
 
 ## Distribute
 
 ### Chrome
 
 - Run `npm run build-chrome`
-- Create ZIP of `./dist`
+- Create ZIP of the contents of `./dist/chrome` (so `manifest.json` is at the zip root)
 - Navigate to Chrome Web Store Developer Dashboard
 - Upload new version to Dashboard
-
-- `npm run build` builds the extension for all the browsers to `extension/BROWSER` directory respectively.
 
 ### Firefox
 
 - Run `npm run build-ff`
-- Create Zip of `./dist`
+- Create ZIP of the contents of `./dist/firefox` (so `manifest.json` is at the zip root)
 - Navigate to [addons.mozilla.org](https://addons.mozilla.org/en-US/developers/addon/asana-expander/versions/submit/)
 - Upload new version
+
+### Build both
+
+- Run `npm run build-all` to produce both `./dist/chrome` and `./dist/firefox`
 
 ## Changelog
 

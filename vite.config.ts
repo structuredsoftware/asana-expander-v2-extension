@@ -11,12 +11,17 @@ function generateManifest() {
   };
 }
 
+const target = process.env.TARGET || "chrome";
+
 export default defineConfig({
+  build: {
+    outDir: `dist/${target}`,
+  },
   plugins: [
     webExtension({
       manifest: generateManifest,
       watchFilePaths: ["package.json", "manifest.json"],
-      browser: process.env.TARGET || "chrome",
+      browser: target,
     }),
   ],
 });

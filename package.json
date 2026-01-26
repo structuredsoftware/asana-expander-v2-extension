@@ -1,15 +1,16 @@
 {
-  "name": "asana-expander-extension",
-  "description": "Automatically show all comments on an Asana task an expand longer comments.",
+  "name": "asana-expander-v2-extension",
+  "description": "Automatically expand comments and threads in Asana tasks, including longer comments and Inbox items.",
   "private": true,
-  "version": "4.2.0",
+  "version": "4.2.1",
   "type": "module",
   "license": "MIT",
   "scripts": {
     "compile": "tsc --noEmit",
     "dev": "vite",
     "build-chrome": "TARGET=chrome vite build",
-    "build-ff": "TARGET=firefox vite build"
+    "build-ff": "TARGET=firefox vite build",
+    "build-all": "npm run build-chrome && npm run build-ff"
   },
   "devDependencies": {
     "@types/webextension-polyfill": "^0.12.1",
