@@ -2,6 +2,11 @@
 
 All notable changes to `asana-expander-v2-extension` will be documented in this file.
 
+## Unreleased
+
+- Re-run task comment expansion when navigating between tasks in the Asana UI
+- Prevent repeated expand clicks that caused hidden comments to toggle open/closed
+
 ## v4.2.2 - 2026-01-26
 
 - Add Firefox-specific add-on metadata (gecko ID and data collection permissions)
