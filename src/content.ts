@@ -2,6 +2,7 @@ import browser from "webextension-polyfill";
 import { expandInboxRichText } from "./expand-inbox";
 import { expandTaskStoryFeed } from "./expand-task-story-feed";
 import { expandTaskStoryRichText } from "./expand-task-story-rich-text";
+import { expandTaskSubtasks } from "./expand-task-subtasks";
 import { log } from "./logger";
 
 interface ExtensionMessage {
@@ -166,6 +167,7 @@ function ensureTaskObserver(): void {
     debounceHandle = window.setTimeout(() => {
       expandTaskStoryFeed();
       expandTaskStoryRichText();
+      expandTaskSubtasks();
     }, 250);
   });
   observer.observe(taskPane, {
@@ -178,6 +180,7 @@ function ensureTaskObserver(): void {
 function expandTaskPaneWithObserver(): void {
   expandTaskStoryFeed();
   expandTaskStoryRichText();
+  expandTaskSubtasks();
   ensureTaskObserver();
 }
 
