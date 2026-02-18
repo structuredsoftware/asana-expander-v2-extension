@@ -194,9 +194,11 @@ function handleUrlChange(): void {
     expandInboxRichText();
 
     ensureInboxObserver();
-  } else if (anyWindow.asanaExpanderInboxObserver) {
-    anyWindow.asanaExpanderInboxObserver.disconnect();
-    delete anyWindow.asanaExpanderInboxObserver;
+  } else {
+    if (anyWindow.asanaExpanderInboxObserver) {
+      anyWindow.asanaExpanderInboxObserver.disconnect();
+      delete anyWindow.asanaExpanderInboxObserver;
+    }
     if (anyWindow.asanaExpanderInboxRootObserver) {
       anyWindow.asanaExpanderInboxRootObserver.disconnect();
       delete anyWindow.asanaExpanderInboxRootObserver;
@@ -206,9 +208,15 @@ function handleUrlChange(): void {
 
   if (isTask) {
     expandTaskPaneWithObserver();
-  } else if (anyWindow.asanaExpanderTaskObserver) {
-    anyWindow.asanaExpanderTaskObserver.disconnect();
-    delete anyWindow.asanaExpanderTaskObserver;
+  } else {
+    if (anyWindow.asanaExpanderTaskObserver) {
+      anyWindow.asanaExpanderTaskObserver.disconnect();
+      delete anyWindow.asanaExpanderTaskObserver;
+    }
+    if (anyWindow.asanaExpanderTaskRootObserver) {
+      anyWindow.asanaExpanderTaskRootObserver.disconnect();
+      delete anyWindow.asanaExpanderTaskRootObserver;
+    }
   }
 }
 

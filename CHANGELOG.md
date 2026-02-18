@@ -4,8 +4,14 @@ All notable changes to `asana-expander-v2-extension` will be documented in this 
 
 ## Unreleased
 
-- Re-run task comment expansion when navigating between tasks in the Asana UI
+- Add auto-expansion for "Load more" in task subtasks
+- Re-run task expansions when navigating between tasks in the Asana UI
 - Prevent repeated expand clicks that caused hidden comments to toggle open/closed
+- Run inbox and task expanders together for inbox item task views
+- Keep inbox expansions working when switching Inbox tabs (e.g., Archive)
+- Scope mutation observers to inbox/task containers for lower overhead
+- Replace DOM-mutation URL watcher with history API hooks for SPA navigation
+- Build scripts zip the dist outputs after builds
 
 ## v4.2.2 - 2026-01-26
 
