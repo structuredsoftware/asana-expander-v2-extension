@@ -22,6 +22,7 @@ type AnyWindow = Window & {
   asanaExpanderTaskObserver?: MutationObserver;
   asanaExpanderInboxRootObserver?: MutationObserver;
   asanaExpanderTaskRootObserver?: MutationObserver;
+  asanaExpanderInboxRoot?: HTMLElement;
   asanaExpanderLastUrl?: string;
   asanaExpanderHistoryPatched?: boolean;
 };
@@ -67,13 +68,38 @@ function ensureInboxObserver(): void {
     return;
   }
 
-  if (anyWindow.asanaExpanderInboxRootObserver) {
-    anyWindow.asanaExpanderInboxRootObserver.disconnect();
-    delete anyWindow.asanaExpanderInboxRootObserver;
+  if (anyWindow.asanaExpanderInboxRoot !== inboxRoot) {
+    if (anyWindow.asanaExpanderInboxObserver) {
+      anyWindow.asanaExpanderInboxObserver.disconnect();
+      delete anyWindow.asanaExpanderInboxObserver;
+    }
+    anyWindow.asanaExpanderInboxRoot = inboxRoot;
   }
 
   if (anyWindow.asanaExpanderInboxObserver) {
     return;
+  }
+
+  if (!anyWindow.asanaExpanderInboxRootObserver) {
+    const rootObserver = new MutationObserver(() => {
+      const foundRoot = document.querySelector<HTMLElement>(INBOX_SELECTOR);
+      if (!foundRoot) {
+        return;
+      }
+      if (anyWindow.asanaExpanderInboxRoot !== foundRoot) {
+        anyWindow.asanaExpanderInboxRoot = foundRoot;
+        if (anyWindow.asanaExpanderInboxObserver) {
+          anyWindow.asanaExpanderInboxObserver.disconnect();
+          delete anyWindow.asanaExpanderInboxObserver;
+        }
+      }
+      ensureInboxObserver();
+    });
+    rootObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+    anyWindow.asanaExpanderInboxRootObserver = rootObserver;
   }
 
   let debounceHandle: number | undefined;
@@ -131,7 +157,7 @@ function ensureTaskObserver(): void {
 
   let debounceHandle: number | undefined;
   const observer = new MutationObserver(() => {
-    if (isInboxUrl()) {
+    if (!isTaskUrl()) {
       return;
     }
     if (debounceHandle !== undefined) {
@@ -168,6 +194,11 @@ function handleUrlChange(): void {
   } else if (anyWindow.asanaExpanderInboxObserver) {
     anyWindow.asanaExpanderInboxObserver.disconnect();
     delete anyWindow.asanaExpanderInboxObserver;
+    if (anyWindow.asanaExpanderInboxRootObserver) {
+      anyWindow.asanaExpanderInboxRootObserver.disconnect();
+      delete anyWindow.asanaExpanderInboxRootObserver;
+    }
+    delete anyWindow.asanaExpanderInboxRoot;
   }
 
   if (isTask) {
