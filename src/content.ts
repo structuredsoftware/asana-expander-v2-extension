@@ -3,6 +3,7 @@ import { expandInboxRichText } from "./expand-inbox";
 import { expandTaskStoryFeed } from "./expand-task-story-feed";
 import { expandTaskStoryRichText } from "./expand-task-story-rich-text";
 import { expandTaskSubtasks } from "./expand-task-subtasks";
+import { expandTaskProjects } from "./expand-task-projects";
 import { log } from "./logger";
 
 interface ExtensionMessage {
@@ -168,6 +169,7 @@ function ensureTaskObserver(): void {
       expandTaskStoryFeed();
       expandTaskStoryRichText();
       expandTaskSubtasks();
+      expandTaskProjects();
     }, 250);
   });
   observer.observe(taskPane, {
@@ -181,6 +183,7 @@ function expandTaskPaneWithObserver(): void {
   expandTaskStoryFeed();
   expandTaskStoryRichText();
   expandTaskSubtasks();
+  expandTaskProjects();
   ensureTaskObserver();
 }
 

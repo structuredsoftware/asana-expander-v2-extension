@@ -2,9 +2,10 @@
 
 All notable changes to `asana-expander-v2-extension` will be documented in this file.
 
-## Unreleased
+## v4.3.0 - 2026-02-18
 
 - Add auto-expansion for "Load more" in task subtasks
+- Add auto-expansion for projects with custom fields in tasks
 - Re-run task expansions when navigating between tasks in the Asana UI
 - Prevent repeated expand clicks that caused hidden comments to toggle open/closed
 - Run inbox and task expanders together for inbox item task views
