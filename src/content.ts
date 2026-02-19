@@ -5,6 +5,7 @@ import { expandTaskStoryRichText } from "./expand-task-story-rich-text";
 import { expandTaskSubtasks } from "./expand-task-subtasks";
 import { expandTaskProjects } from "./expand-task-projects";
 import { log } from "./logger";
+import { DEFAULT_FEATURE_SETTINGS, FeatureSettings } from "./settings";
 
 interface ExtensionMessage {
   message: string;
@@ -32,6 +33,21 @@ type AnyWindow = Window & {
 const INBOX_SELECTOR = ".InboxFeed";
 const TASK_PANE_SELECTOR = ".TaskPane";
 
+let featureSettings: FeatureSettings = { ...DEFAULT_FEATURE_SETTINGS };
+
+function isInboxFeatureEnabled(): boolean {
+  return featureSettings.inboxRichText;
+}
+
+function isAnyTaskFeatureEnabled(): boolean {
+  return (
+    featureSettings.taskStoryFeed ||
+    featureSettings.taskStoryRichText ||
+    featureSettings.taskSubtasks ||
+    featureSettings.taskProjects
+  );
+}
+
 function isInboxUrl(): boolean {
   const url = String(window.location);
   return url.includes("/inbox/");
@@ -44,6 +60,18 @@ function isTaskUrl(): boolean {
 
 function ensureInboxObserver(): void {
   const anyWindow = window as AnyWindow;
+  if (!isInboxFeatureEnabled()) {
+    if (anyWindow.asanaExpanderInboxObserver) {
+      anyWindow.asanaExpanderInboxObserver.disconnect();
+      delete anyWindow.asanaExpanderInboxObserver;
+    }
+    if (anyWindow.asanaExpanderInboxRootObserver) {
+      anyWindow.asanaExpanderInboxRootObserver.disconnect();
+      delete anyWindow.asanaExpanderInboxRootObserver;
+    }
+    delete anyWindow.asanaExpanderInboxRoot;
+    return;
+  }
   const inboxRoot = document.querySelector<HTMLElement>(INBOX_SELECTOR);
 
   if (!inboxRoot) {
@@ -122,6 +150,17 @@ function ensureInboxObserver(): void {
 
 function ensureTaskObserver(): void {
   const anyWindow = window as AnyWindow;
+  if (!isAnyTaskFeatureEnabled()) {
+    if (anyWindow.asanaExpanderTaskObserver) {
+      anyWindow.asanaExpanderTaskObserver.disconnect();
+      delete anyWindow.asanaExpanderTaskObserver;
+    }
+    if (anyWindow.asanaExpanderTaskRootObserver) {
+      anyWindow.asanaExpanderTaskRootObserver.disconnect();
+      delete anyWindow.asanaExpanderTaskRootObserver;
+    }
+    return;
+  }
   const taskPane = document.querySelector<HTMLElement>(TASK_PANE_SELECTOR);
 
   if (!taskPane) {
@@ -166,10 +205,18 @@ function ensureTaskObserver(): void {
       window.clearTimeout(debounceHandle);
     }
     debounceHandle = window.setTimeout(() => {
-      expandTaskStoryFeed();
-      expandTaskStoryRichText();
-      expandTaskSubtasks();
-      expandTaskProjects();
+      if (featureSettings.taskStoryFeed) {
+        expandTaskStoryFeed();
+      }
+      if (featureSettings.taskStoryRichText) {
+        expandTaskStoryRichText();
+      }
+      if (featureSettings.taskSubtasks) {
+        expandTaskSubtasks();
+      }
+      if (featureSettings.taskProjects) {
+        expandTaskProjects();
+      }
     }, 250);
   });
   observer.observe(taskPane, {
@@ -180,10 +227,18 @@ function ensureTaskObserver(): void {
 }
 
 function expandTaskPaneWithObserver(): void {
-  expandTaskStoryFeed();
-  expandTaskStoryRichText();
-  expandTaskSubtasks();
-  expandTaskProjects();
+  if (featureSettings.taskStoryFeed) {
+    expandTaskStoryFeed();
+  }
+  if (featureSettings.taskStoryRichText) {
+    expandTaskStoryRichText();
+  }
+  if (featureSettings.taskSubtasks) {
+    expandTaskSubtasks();
+  }
+  if (featureSettings.taskProjects) {
+    expandTaskProjects();
+  }
   ensureTaskObserver();
 }
 
@@ -193,8 +248,10 @@ function handleUrlChange(): void {
   const isTask = isTaskUrl();
 
   if (isInbox) {
-    log("Expand Inbox");
-    expandInboxRichText();
+    if (isInboxFeatureEnabled()) {
+      log("Expand Inbox");
+      expandInboxRichText();
+    }
 
     ensureInboxObserver();
   } else {
@@ -209,7 +266,7 @@ function handleUrlChange(): void {
     delete anyWindow.asanaExpanderInboxRoot;
   }
 
-  if (isTask) {
+  if (isTask && isAnyTaskFeatureEnabled()) {
     expandTaskPaneWithObserver();
   } else {
     if (anyWindow.asanaExpanderTaskObserver) {
@@ -231,6 +288,40 @@ function handlePotentialUrlChange(): void {
   }
   anyWindow.asanaExpanderLastUrl = currentUrl;
   handleUrlChange();
+}
+
+async function refreshFeatureSettings(): Promise<void> {
+  try {
+    const stored = await browser.storage.sync.get(DEFAULT_FEATURE_SETTINGS);
+    featureSettings = {
+      ...DEFAULT_FEATURE_SETTINGS,
+      ...(stored as Partial<FeatureSettings>),
+    };
+  } catch {
+    featureSettings = { ...DEFAULT_FEATURE_SETTINGS };
+  }
+}
+
+function handleSettingsChange(
+  changes: Record<string, browser.Storage.StorageChange>,
+  areaName: string,
+): void {
+  if (areaName !== "sync") {
+    return;
+  }
+  let changed = false;
+  for (const [key, change] of Object.entries(changes)) {
+    if (key in featureSettings) {
+      featureSettings = {
+        ...featureSettings,
+        [key]: change.newValue ?? DEFAULT_FEATURE_SETTINGS[key as keyof FeatureSettings],
+      };
+      changed = true;
+    }
+  }
+  if (changed) {
+    handleUrlChange();
+  }
 }
 
 function installHistoryHooks(): void {
@@ -260,8 +351,14 @@ function installHistoryHooks(): void {
   window.addEventListener("asana-expander-urlchange", handlePotentialUrlChange);
 }
 
-installHistoryHooks();
-handlePotentialUrlChange();
+async function init(): Promise<void> {
+  await refreshFeatureSettings();
+  browser.storage.onChanged.addListener(handleSettingsChange);
+  installHistoryHooks();
+  handlePotentialUrlChange();
+}
+
+void init();
 
 browser.runtime.onMessage.addListener(async request => {
   if (!isExtensionMessage(request)) {

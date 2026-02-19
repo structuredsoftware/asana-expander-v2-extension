@@ -18,9 +18,17 @@
     "96": "icon/96.png",
     "128": "icon/128.png"
   },
-  "{{firefox}}.permissions": ["tabs", "*://*.asana.com/*"],
-  "{{chrome}}.permissions": ["tabs"],
+  "{{firefox}}.permissions": ["tabs", "storage", "*://*.asana.com/*"],
+  "{{chrome}}.permissions": ["tabs", "storage"],
   "{{chrome}}.host_permissions": ["*://*.asana.com/*"],
+  "{{chrome}}.action": {
+    "default_title": "Asana Expander v2",
+    "default_popup": "src/popup/popup.html"
+  },
+  "{{firefox}}.browser_action": {
+    "default_title": "Asana Expander v2",
+    "default_popup": "src/popup/popup.html"
+  },
   "background": {
     "{{chrome}}.service_worker": "src/background.ts",
     "{{firefox}}.scripts": ["src/background.ts"]

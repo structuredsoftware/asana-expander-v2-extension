@@ -13,6 +13,7 @@ All notable changes to `asana-expander-v2-extension` will be documented in this 
 - Scope mutation observers to inbox/task containers for lower overhead
 - Replace DOM-mutation URL watcher with history API hooks for SPA navigation
 - Build scripts zip the dist outputs after builds
+- Add a popup UI to toggle expander features
 
 ## v4.2.2 - 2026-01-26
 

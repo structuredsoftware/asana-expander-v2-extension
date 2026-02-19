@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asana Expander</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="header">
+        <h1>Asana Expander v2</h1>
+        <p>Enable or disable features</p>
+      </header>
+
+      <section>
+        <div class="section-header">Inbox</div>
+        <div class="toggle">
+          <span class="label">Expand Each Notification</span>
+          <label class="switch-control">
+            <input type="checkbox" data-key="inboxRichText" />
+            <span class="switch"></span>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-header">Tasks</div>
+        <div class="toggle">
+          <span class="label">Expand Project Fields</span>
+          <label class="switch-control">
+            <input type="checkbox" data-key="taskProjects" />
+            <span class="switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle">
+          <span class="label">Expand Subtask List</span>
+          <label class="switch-control">
+            <input type="checkbox" data-key="taskSubtasks" />
+            <span class="switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle">
+          <span class="label">Expand Comment List</span>
+          <label class="switch-control">
+            <input type="checkbox" data-key="taskStoryFeed" />
+            <span class="switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle">
+          <span class="label">Expand Each Comment</span>
+          <label class="switch-control">
+            <input type="checkbox" data-key="taskStoryRichText" />
+            <span class="switch"></span>
+          </label>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="popup.ts"></script>
+  </body>
+</html>
