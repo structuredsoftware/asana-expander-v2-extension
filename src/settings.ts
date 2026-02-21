@@ -4,6 +4,7 @@ export type FeatureSettings = {
   taskStoryRichText: boolean;
   taskSubtasks: boolean;
   taskProjects: boolean;
+  taskActivityUpdates: boolean;
 };
 
 export const DEFAULT_FEATURE_SETTINGS: FeatureSettings = {
@@ -12,4 +13,5 @@ export const DEFAULT_FEATURE_SETTINGS: FeatureSettings = {
   taskStoryRichText: true,
   taskSubtasks: true,
   taskProjects: true,
+  taskActivityUpdates: true,
 };
