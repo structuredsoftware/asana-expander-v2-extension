@@ -8,62 +8,137 @@
   </head>
   <body>
     <main class="popup">
-      <header class="header">
-        <h1>Asana Expander v2</h1>
-        <p>Enable or disable features</p>
+      <header>
+        <p class="heading-1">Asana Expander v2</p>
+        <p class="subheading">Manage which features are enabled</p>
       </header>
-
       <section>
-        <div class="section-header">Inbox</div>
-        <div class="toggle">
-          <span class="label">Expand Each Notification</span>
-          <label class="switch-control">
-            <input type="checkbox" data-key="inboxRichText" />
-            <span class="switch"></span>
-          </label>
+        <p class="section-heading">Inbox</p>
+        <div class="item-list">
+          <div class="item">
+            <div class="item-left">
+              <div class="icon-circle">
+                <img
+                  src="/src/assets/icons/bell.svg"
+                  alt="Projects Icon"
+                  class="icon" />
+              </div>
+
+              <div class="item-text">
+                <p class="item-title">Notifications</p>
+                <p class="item-descriptrion">
+                  Expand the text of each notification
+                </p>
+              </div>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" data-key="inboxRichText" />
+              <span class="switch"></span>
+            </label>
+          </div>
         </div>
       </section>
-
       <section>
-        <div class="section-header">Tasks</div>
-        <div class="toggle">
-          <span class="label">Expand Project Fields</span>
-          <label class="switch-control">
-            <input type="checkbox" data-key="taskProjects" />
-            <span class="switch"></span>
-          </label>
-        </div>
-
-        <div class="toggle">
-          <span class="label">Expand Subtask List</span>
-          <label class="switch-control">
-            <input type="checkbox" data-key="taskSubtasks" />
-            <span class="switch"></span>
-          </label>
-        </div>
-
-        <div class="toggle">
-          <span class="label">Expand Comment List</span>
-          <label class="switch-control">
-            <input type="checkbox" data-key="taskStoryFeed" />
-            <span class="switch"></span>
-          </label>
-        </div>
-
-        <div class="toggle">
-          <span class="label">Expand Each Comment</span>
-          <label class="switch-control">
-            <input type="checkbox" data-key="taskStoryRichText" />
-            <span class="switch"></span>
-          </label>
-        </div>
-
-        <div class="toggle">
-          <span class="label">Expand Activity Updates</span>
-          <label class="switch-control">
-            <input type="checkbox" data-key="taskActivityUpdates" />
-            <span class="switch"></span>
-          </label>
+        <p class="section-heading">Tasks</p>
+        <div class="item-list">
+          <div class="item">
+            <div class="item-left">
+              <div class="icon-circle">
+                <img
+                  src="/src/assets/icons/triangle-down.svg"
+                  alt="Projects Icon"
+                  class="icon" />
+              </div>
+              <div class="item-text">
+                <p class="item-title">Projects</p>
+                <p class="item-descriptrion">
+                  Expand each Project to reveal all fields
+                </p>
+              </div>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" data-key="taskProjects" />
+              <span class="switch"></span>
+            </label>
+          </div>
+          <div class="item-divider"></div>
+          <div class="item">
+            <div class="item-left">
+              <div class="icon-circle">
+                <img
+                  src="/src/assets/icons/check-circle.svg"
+                  alt="Subtasks Icon"
+                  class="icon" />
+              </div>
+              <div class="item-text">
+                <p class="item-title">Subtasks List</p>
+                <p class="item-descriptrion">Show all hidden subtasks</p>
+              </div>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" data-key="taskSubtasks" />
+              <span class="switch"></span>
+            </label>
+          </div>
+          <div class="item-divider"></div>
+          <div class="item">
+            <div class="item-left">
+              <div class="icon-circle">
+                <img
+                  src="/src/assets/icons/list-bullets.svg"
+                  alt="Comment List Icon"
+                  class="icon" />
+              </div>
+              <div class="item-text">
+                <p class="item-title">Comments List</p>
+                <p class="item-descriptrion">Show all hidden comments</p>
+              </div>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" data-key="taskStoryFeed" />
+              <span class="switch"></span>
+            </label>
+          </div>
+          <div class="item-divider"></div>
+          <div class="item">
+            <div class="item-left">
+              <div class="icon-circle">
+                <img
+                  src="/src/assets/icons/chat-text.svg"
+                  alt="Comments Icon"
+                  class="icon" />
+              </div>
+              <div class="item-text">
+                <p class="item-title">Comments</p>
+                <p class="item-descriptrion">Expand the text of each comment</p>
+              </div>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" data-key="taskStoryRichText" />
+              <span class="switch"></span>
+            </label>
+          </div>
+          <div class="item-divider"></div>
+          <div class="item">
+            <div class="item-left">
+              <div class="icon-circle">
+                <img
+                  src="/src/assets/icons/pulse.svg"
+                  alt="Activity Updates Icon"
+                  class="icon" />
+              </div>
+              <div class="item-text">
+                <p class="item-title">Activity Updates</p>
+                <p class="item-descriptrion">
+                  Show all hidden activity updates
+                </p>
+              </div>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" data-key="taskActivityUpdates" />
+              <span class="switch"></span>
+            </label>
+          </div>
         </div>
       </section>
     </main>
