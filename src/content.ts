@@ -56,8 +56,19 @@ function isInboxUrl(): boolean {
 }
 
 function isTaskUrl(): boolean {
-  const url = String(window.location);
-  return url.includes("/task/") || url.includes("/item/");
+  const pathname = window.location.pathname;
+  if (pathname.includes("/task/") || pathname.includes("/item/")) {
+    return true;
+  }
+
+  const pathSegments = pathname.split("/").filter(Boolean);
+  const homeIndex = pathSegments.indexOf("home");
+  if (homeIndex === -1) {
+    return false;
+  }
+
+  const homeRouteIds = pathSegments.slice(homeIndex + 1);
+  return homeRouteIds.length >= 2 && homeRouteIds.every(segment => /^\d+$/.test(segment));
 }
 
 function ensureInboxObserver(): void {
