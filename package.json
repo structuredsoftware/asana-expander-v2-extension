@@ -1,6 +1,6 @@
 {
   "name": "asana-expander-v2-extension",
-  "description": "Automatically expand comments and threads in Asana tasks, including longer comments and Inbox items.",
+  "description": "Automatically expands hidden content in Asana tasks and inbox",
   "private": true,
   "version": "4.3.0",
   "type": "module",
