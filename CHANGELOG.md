@@ -6,7 +6,6 @@ All notable changes to `asana-expander-v2-extension` will be documented in this 
 
 - Add auto-expansion for "Load more" in task subtasks
 - Add auto-expansion for projects with custom fields in tasks
-- Add auto-expansion for activity updates in task story feed
 - Add a popup UI to toggle expander features
 - Include Home page task-pane URLs in task detection
 - Re-run task expansions when navigating between tasks in the Asana UI

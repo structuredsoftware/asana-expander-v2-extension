@@ -4,7 +4,6 @@ import { expandTaskStoryFeed } from "./expand-task-story-feed";
 import { expandTaskStoryRichText } from "./expand-task-story-rich-text";
 import { expandTaskSubtasks } from "./expand-task-subtasks";
 import { expandTaskProjects } from "./expand-task-projects";
-import { expandTaskActivityUpdates } from "./expand-task-activity";
 import { log } from "./logger";
 import { DEFAULT_FEATURE_SETTINGS, FeatureSettings } from "./settings";
 
@@ -45,8 +44,7 @@ function isAnyTaskFeatureEnabled(): boolean {
     featureSettings.taskStoryFeed ||
     featureSettings.taskStoryRichText ||
     featureSettings.taskSubtasks ||
-    featureSettings.taskProjects ||
-    featureSettings.taskActivityUpdates
+    featureSettings.taskProjects
   );
 }
 
@@ -221,9 +219,6 @@ function ensureTaskObserver(): void {
       if (featureSettings.taskStoryFeed) {
         expandTaskStoryFeed();
       }
-      if (featureSettings.taskActivityUpdates) {
-        expandTaskActivityUpdates();
-      }
       if (featureSettings.taskStoryRichText) {
         expandTaskStoryRichText();
       }
@@ -245,9 +240,6 @@ function ensureTaskObserver(): void {
 function expandTaskPaneWithObserver(): void {
   if (featureSettings.taskStoryFeed) {
     expandTaskStoryFeed();
-  }
-  if (featureSettings.taskActivityUpdates) {
-    expandTaskActivityUpdates();
   }
   if (featureSettings.taskStoryRichText) {
     expandTaskStoryRichText();
