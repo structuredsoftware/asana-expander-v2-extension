@@ -28,6 +28,8 @@ type AnyWindow = Window & {
   asanaExpanderInboxRoot?: HTMLElement;
   asanaExpanderLastUrl?: string;
   asanaExpanderHistoryPatched?: boolean;
+  asanaExpanderTaskRefreshTimeout?: number;
+  asanaExpanderTaskRefreshToken?: number;
 };
 
 const INBOX_SELECTOR = ".InboxFeed";
@@ -74,6 +76,56 @@ function isTaskUrl(): boolean {
 
   const homeRouteIds = pathSegments.slice(homeIndex + 1);
   return homeRouteIds.length >= 2 && homeRouteIds.every(segment => /^\d+$/.test(segment));
+}
+
+function resetTaskPaneExpansionState(): void {
+  const taskPane = document.querySelector<HTMLElement>(TASK_PANE_SELECTOR);
+  if (!taskPane) {
+    return;
+  }
+
+  for (const element of Array.from(
+    taskPane.querySelectorAll<HTMLElement>("[data-asana-expander-clicked]"),
+  )) {
+    delete element.dataset.asanaExpanderClicked;
+  }
+}
+
+function scheduleTaskPaneRefresh(): void {
+  const anyWindow = window as AnyWindow;
+  if (anyWindow.asanaExpanderTaskRefreshTimeout !== undefined) {
+    window.clearTimeout(anyWindow.asanaExpanderTaskRefreshTimeout);
+  }
+
+  const refreshToken = (anyWindow.asanaExpanderTaskRefreshToken ?? 0) + 1;
+  anyWindow.asanaExpanderTaskRefreshToken = refreshToken;
+  const taskUrl = String(window.location);
+  const retryDelays = [250, 750, 1500, 2500];
+
+  const runRefresh = (attempt: number): void => {
+    anyWindow.asanaExpanderTaskRefreshTimeout = window.setTimeout(() => {
+      if (
+        anyWindow.asanaExpanderTaskRefreshToken !== refreshToken ||
+        !isTaskUrl() ||
+        String(window.location) !== taskUrl
+      ) {
+        delete anyWindow.asanaExpanderTaskRefreshTimeout;
+        return;
+      }
+
+      resetTaskPaneExpansionState();
+      expandTaskPaneWithObserver();
+
+      if (attempt >= retryDelays.length - 1) {
+        delete anyWindow.asanaExpanderTaskRefreshTimeout;
+        return;
+      }
+
+      runRefresh(attempt + 1);
+    }, retryDelays[attempt]);
+  };
+
+  runRefresh(0);
 }
 
 function ensureInboxObserver(): void {
@@ -285,8 +337,15 @@ function handleUrlChange(): void {
   }
 
   if (isTask && isAnyTaskFeatureEnabled()) {
+    resetTaskPaneExpansionState();
     expandTaskPaneWithObserver();
+    scheduleTaskPaneRefresh();
   } else {
+    if (anyWindow.asanaExpanderTaskRefreshTimeout !== undefined) {
+      window.clearTimeout(anyWindow.asanaExpanderTaskRefreshTimeout);
+      delete anyWindow.asanaExpanderTaskRefreshTimeout;
+    }
+    delete anyWindow.asanaExpanderTaskRefreshToken;
     if (anyWindow.asanaExpanderTaskObserver) {
       anyWindow.asanaExpanderTaskObserver.disconnect();
       delete anyWindow.asanaExpanderTaskObserver;
