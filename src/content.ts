@@ -59,6 +59,13 @@ function isTaskUrl(): boolean {
     return true;
   }
 
+  if (pathname.includes("/search")) {
+    const childId = new URLSearchParams(window.location.search).get("child");
+    if (childId && /^\d+$/.test(childId)) {
+      return true;
+    }
+  }
+
   const pathSegments = pathname.split("/").filter(Boolean);
   const homeIndex = pathSegments.indexOf("home");
   if (homeIndex === -1) {

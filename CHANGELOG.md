@@ -2,6 +2,11 @@
 
 All notable changes to `asana-expander-v2-extension` will be documented in this file.
 
+## v4.3.1 - 2026-03-30
+
+- Include search-result task-pane URLs with `child=<gid>` in task detection
+- Refresh README and AGENTS.md to reflect current extension behavior
+
 ## v4.3.0 - 2026-03-05
 
 - Add auto-expansion for "Load more" in task subtasks

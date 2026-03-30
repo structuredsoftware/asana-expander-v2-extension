@@ -7,11 +7,18 @@
 
 ---
 
-Asana Expander v2 is a browser extension to automatically expand comments and threads in Asana, including Inbox items.
+Asana Expander v2 is a browser extension that automatically expands hidden content across Asana task panes and Inbox notifications.
 
-Do you also hate to click on those "See more" links in Asana, just to see the last sentence of a longer comment? Or did you also miss an important comment in a longer comment thread in an Asana Task?
+It removes the extra clicking needed to read full content in common Asana workflows, including standard task views, Home task panes, search-result task panes, and Inbox items.
 
-This extension solves this problem by automatically clicking on those links whenever you open a task with many comments, view longer comments, or scroll through Inbox notifications.
+Current features include:
+
+- expanding long Inbox notification text
+- expanding project sections to reveal custom fields
+- expanding the full subtasks list
+- expanding the full comments and activity feed list
+- expanding long comment text
+- enabling or disabling each feature from the popup UI
 
 ## Installation
 
@@ -26,7 +33,7 @@ Ensure you have
 
 Then run the following:
 
-- `npm run install` to install dependencies.
+- `npm install` to install dependencies
 - `npm run dev` to start the development server
 - `npm run build-chrome` to build chrome extension
 - `npm run build-ff` to build firefox addon
