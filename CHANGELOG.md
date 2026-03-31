@@ -5,6 +5,8 @@ All notable changes to `asana-expander-v2-extension` will be documented in this 
 ## v4.3.1 - 2026-03-30
 
 - Include search-result task-pane URLs with `child=<gid>` in task detection
+- Expand additional project field controls, including inherited fields and custom-field "show more" actions
+- Scope story-feed comment expansion to collapsed state only
 - Re-run task-pane expanders when Asana swaps task content inside a persistent overlay
 - Reset extension click markers between task navigations so reused task-pane elements can expand again
 
