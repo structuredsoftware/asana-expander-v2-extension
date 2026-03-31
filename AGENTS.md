@@ -97,6 +97,16 @@ The extension is designed to avoid broad document-wide observer churn.
 
 If you broaden observation scope, expect performance regressions inside Asana's SPA.
 
+### DOM caveats
+
+- Do not assume every project-related task-pane control lives inside `.TaskProjects`. For example, `.TaskPaneFields-loadMore` can live elsewhere in the current `.TaskPane`.
+- Several Asana expand controls stay mounted after being clicked and only change their text or ARIA state. When needed, guard auto-clicks by current button text, not only by selector presence or `data-asana-expander-clicked`.
+- Current examples of text-state guards include:
+  - story feed: skip `Hide earlier comments`
+  - custom project fields: skip `Hide custom fields`
+  - inherited fields: click only `Show inherited fields`
+- If an auto-clicked control keeps visible focus, blur it after clicking to avoid leaving a distracting outline in the task pane.
+
 ### Feature flags
 
 Every user-toggleable behavior must be represented consistently in all of these places:
