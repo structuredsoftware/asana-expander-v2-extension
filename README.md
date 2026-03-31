@@ -9,7 +9,7 @@
 
 Asana Expander v2 is a browser extension that automatically expands hidden content across Asana task panes and Inbox notifications.
 
-It removes the extra clicking needed to read full content in common Asana workflows, including standard task views, Home task panes, search-result task panes, and Inbox items.
+It removes the extra clicking needed to read full content in common Asana workflows, including standard task views, Home task panes, search-result task panes, and Inbox items. It also keeps task expansions working when Asana swaps task content inside a persistent details overlay, such as when drilling from a parent task into a subtask.
 
 Current features include:
 

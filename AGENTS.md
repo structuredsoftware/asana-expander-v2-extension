@@ -31,6 +31,7 @@ Important product behavior:
 - Task detection is not limited to `/task/` URLs.
 - The Asana task pane can also be open on Home routes like `/0/home/<gid>/<gid>`.
 - The Asana task pane can also be open from search results on routes like `/0/search?...&child=<gid>`.
+- Asana can keep the task details overlay mounted while swapping the active task content inside it.
 - Inbox item task views can require inbox and task expanders to run together.
 
 ## Architecture
@@ -92,6 +93,7 @@ The extension is designed to avoid broad document-wide observer churn.
 - Observe `.TaskPane` for task work.
 - Use root observers only when waiting for those containers to appear.
 - Keep debounce behavior intact unless there is a clear reason to change it.
+- When task content changes inside a persistent overlay, clear extension-owned click markers and allow short delayed refresh retries so late-loading story feed content can still expand.
 
 If you broaden observation scope, expect performance regressions inside Asana's SPA.
 
