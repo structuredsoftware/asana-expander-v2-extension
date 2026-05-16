@@ -7,15 +7,9 @@ export function expandInboxRichText(): void {
     return;
   }
 
-  const showMoreElements = $$(".TruncatedRichText-expand", inboxRoot).filter(
+  for (const link of $$("[role='button']", inboxRoot).filter(
     (el) => !el.dataset.asanaExpanderClicked,
-  );
-
-  if (showMoreElements.length === 0) {
-    return;
-  }
-
-  for (const link of showMoreElements) {
+  ).filter((el) => /see more/i.test(el.textContent ?? ""))) {
     link.dataset.asanaExpanderClicked = "true";
     log("Expand Inbox", link);
     link.click();

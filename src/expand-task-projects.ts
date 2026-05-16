@@ -9,7 +9,7 @@ export function expandTaskProjects(): void {
   }
 
   const projectToggles = projectsRoot
-    ? $$(".TaskProjectWithCustomPropertyRows-toggleButton", projectsRoot)
+    ? $$(".IconButtonThemeablePresentation", projectsRoot)
         .filter((el) => el.getAttribute("aria-label") === "Expand fields")
         .filter((el) => !el.dataset.asanaExpanderClicked)
     : [];
